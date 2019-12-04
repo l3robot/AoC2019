@@ -31,14 +31,6 @@ def manhattan_from_origin(pts):
     return manhattan(pts, [0, 0])
 
 
-def reduce_distance(pts_list):
-    if len(pts_list) == 1:
-        return manhattan_from_origin(pts_list[0])
-    else:
-        sub_distance = reduce_distance(pts_list[:-1])
-        return manhattan(pts_list[-1], pts_list[-2]) + sub_distance
-
-
 if __name__ == '__main__':
     wire0, wire1 = map(lambda x: x.split(','), DATA.split('\n'))
     wire0_walk, wire1_walk = list(walk(wire0)), list(walk(wire1))
@@ -49,6 +41,7 @@ if __name__ == '__main__':
     wire1_intersec_idx = list(map(wire1_walk.index, intersec))
     sum_idx = list(map(lambda x, y: x + y, wire0_intersec_idx, wire1_intersec_idx))
     argmin = sum_idx.index(min(sum_idx))
+    # +2 because of the initial step from both walk.
     min_delay = 2 + wire0_intersec_idx[argmin] + wire1_intersec_idx[argmin]
     print(f'The minimal delay for interesections is {min_delay}')
 
